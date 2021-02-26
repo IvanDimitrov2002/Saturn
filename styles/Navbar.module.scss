@@ -1,0 +1,45 @@
+@import 'variables';
+
+:global(#__next) {
+    .container {
+        min-height: 140px;
+        background-color: $primary-color;
+
+        .menu {
+            padding: 8px 8px 0;
+            margin-bottom: 0;
+        }
+
+        .mobile-menu {
+            display: none;
+
+            :global(.item) {
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .header {
+            a {
+                color: white;
+            }
+            font-size: 42px;
+            font-family: $secondary-font;
+            letter-spacing: 10px;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    :global(#__next) {
+        .container {
+            .mobile-menu {
+                display: flex;
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+*,
+*::after,
+*::before {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+}
+
+#__next {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    text-decoration: none;
+}

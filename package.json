@@ -1,0 +1,39 @@
+{
+  "name": "test",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 5000",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@nandorojo/swr-firestore": "^0.16.0",
+    "date-fns": "^2.17.0",
+    "firebase": "^8.2.9",
+    "firebase-admin": "^9.5.0",
+    "js-cookie": "^2.2.1",
+    "next": "10.0.7",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^2.2.6",
+    "@types/node": "^14.14.30",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
+    "@typescript-eslint/parser": "^4.15.1",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "^2.2.1",
+    "sass": "^1.32.8",
+    "typescript": "^4.1.5"
+  }
+}
