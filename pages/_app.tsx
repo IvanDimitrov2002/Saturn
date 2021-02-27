@@ -2,6 +2,7 @@ import 'styles/globals.scss';
 import 'semantic-ui-css/semantic.min.css';
 import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/storage';
 import { FuegoProvider } from '@nandorojo/swr-firestore';
 import { Fuego } from 'utils/fuego';
 import { AppProps } from 'next/app';
@@ -13,6 +14,7 @@ const firebaseConfig = {
     authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
     databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
     projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
 };
 
 const fuego = new Fuego(firebaseConfig);

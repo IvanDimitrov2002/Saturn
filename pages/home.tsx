@@ -10,7 +10,7 @@ import {
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { FunctionComponent, useEffect } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { usePalette } from 'react-palette';
 import { Header } from 'semantic-ui-react';
 import styles from 'styles/Home.module.scss';
@@ -24,7 +24,6 @@ interface ProductCardProps extends Offer {
 }
 
 const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
-    const { data: imageColors } = usePalette(props.imageUrl);
     const x = useMotionValue(0);
     const controls = useAnimation();
     const scale = useTransform(x, (value) => -Math.abs(value) / 500 + 1);
@@ -50,24 +49,38 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
     };
 
     const [width] = useWindowSize();
+    const [images, setImages] = useState<string[]>([]);
+    const { data: imageColors } = usePalette(images[0]);
 
     useEffect(() => {
         (async () => {
             try {
-                await fuego.storage();
+                const imagesRef = await fuego
+                    .storage()
+                    .ref()
+                    .child(`${props.id}`)
+                    .listAll();
+                const imagesUrls: string[] = await Promise.all(
+                    imagesRef.items.map(
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        (imageRef: { getDownloadURL: () => any }) =>
+                            imageRef.getDownloadURL()
+                    )
+                );
+                setImages(imagesUrls);
             } catch (error) {
                 console.log(error);
             }
         })();
     }, []);
 
-    return (
+    return images.length > 0 ? (
         <motion.div
             style={{
                 background: imageColors.darkVibrant,
                 scale,
                 x,
-                color: getContrast(imageColors.darkVibrant || '#fff'),
+                color: getContrast(imageColors.darkVibrant || '#000'),
             }}
             className={styles['product-container']}
             drag='x'
@@ -79,26 +92,30 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
                 right: { x: width, opacity: 0 },
             }}
         >
-            <Header
-                style={{
-                    color: getContrast(imageColors.darkVibrant || '#fff'),
-                }}
-                className={styles['product-header']}
-            >
-                {props.title}
-            </Header>
-            <Image
-                className={styles['product-image']}
-                layout='responsive'
-                width={600}
-                height={600}
-                src={props.imageUrl}
-                alt='Example'
-            />
-            <p className={styles['product-price']}>
-                Price: <span>${props.price / 100}</span>
-            </p>
+            <>
+                <Header
+                    style={{
+                        color: getContrast(imageColors.darkVibrant || '#fff'),
+                    }}
+                    className={styles['product-header']}
+                >
+                    {props.title}
+                </Header>
+                <Image
+                    className={styles['product-image']}
+                    layout='responsive'
+                    width={600}
+                    height={600}
+                    src={images[0]}
+                    alt='product-image'
+                />
+                <p className={styles['product-price']}>
+                    Price: <span>${props.price / 100}</span>
+                </p>
+            </>
         </motion.div>
+    ) : (
+        <div></div>
     );
 };
 
