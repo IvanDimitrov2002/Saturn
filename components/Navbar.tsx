@@ -19,9 +19,11 @@ const Navbar: FunctionComponent = () => {
                     </Header>
                 </Menu.Item>
                 <Menu.Menu position='right'>
-                    <Menu.Item onClick={() => ({})}>
-                        <Icon name='shopping cart' />
-                    </Menu.Item>
+                    <Link href='/cart' passHref>
+                        <Menu.Item as='a' onClick={() => ({})}>
+                            <Icon name='shopping cart' />
+                        </Menu.Item>
+                    </Link>
                 </Menu.Menu>
             </Menu>
         </div>

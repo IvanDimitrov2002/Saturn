@@ -10,28 +10,36 @@
         position: relative;
 
         .product-container {
+            display: flex;
+            flex-direction: column;
             padding: 20px;
             border-radius: 10px;
             max-width: 380px;
-            margin: 20px;
+            margin: 20px 20px 0;
             width: calc(100% - 40px);
             box-shadow: $card-shadow;
 
+            .product-info {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .product-image {
+                    border-radius: 10px;
+                }
+
+                .product-price {
+                    font-size: 20px;
+                    margin-top: 15px;
+
+                    span {
+                        font-weight: 700;
+                    }
+                }
+            }
+
             .product-header {
                 font-size: 25px;
-            }
-
-            .product-image {
-                border-radius: 10px;
-            }
-
-            .product-price {
-                font-size: 20px;
-                margin-top: 15px;
-
-                span {
-                    font-weight: 700;
-                }
             }
         }
     }
