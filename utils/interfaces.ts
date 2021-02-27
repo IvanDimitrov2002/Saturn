@@ -1,21 +1,14 @@
 export interface User {
     id?: string;
-    name: string;
-    email: string;
-    roles: string[];
-    phone?: string;
-    company?: string;
-    skills?: string[];
+    role: string;
 }
 
-export interface Ticket {
+export interface Offer {
     id?: string;
-    contact: string;
-    place: string;
-    problem: string;
-    status: string;
-    createdAt: Timestamp | Date;
-    user: User;
+    title: string;
+    description: string;
+    price: number;
+    seller: User;
 }
 
 export interface Timestamp {

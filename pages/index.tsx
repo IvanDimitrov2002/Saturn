@@ -5,6 +5,7 @@ import { fuego } from '@nandorojo/swr-firestore';
 import styles from 'styles/Index.module.scss';
 import { useRouter } from 'next/router';
 import LoadingPage from 'components/LoadingPage';
+import { motion } from 'framer-motion';
 
 const Index: FunctionComponent = () => {
     const router = useRouter();
@@ -14,21 +15,24 @@ const Index: FunctionComponent = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (status === 'loggedin') {
-            router.push('/dashboard');
+            router.push('/home');
         }
     }, [status]);
 
     const login = async (e: FormEvent) => {
         e.preventDefault();
+        setLoading(true);
         try {
             await fuego.auth().signInWithEmailAndPassword(email, password);
         } catch (error) {
             setError(error.message);
             setTimeout(() => setError(''), 6000);
         }
+        setLoading(false);
     };
 
     if (status === 'wait') {
@@ -37,13 +41,12 @@ const Index: FunctionComponent = () => {
 
     return (
         <div className={styles['container']}>
-            <Header className={styles['header']} as='h1'>
-                HELPq
-                <Header.Subheader className={styles['sub-header']}>
-                    Have a question? Get matched with a mentor for help.
-                </Header.Subheader>
-            </Header>
+            <Header className={styles['header']}>Saturn</Header>
+
             <Form className={styles['form']} onSubmit={login}>
+                <Header className={styles['header']} as='h3'>
+                    Join our community today!
+                </Header>
                 <Form.Input
                     icon='user'
                     iconPosition='left'
@@ -63,11 +66,15 @@ const Index: FunctionComponent = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <Button
+                    whileTap={{ scale: 0.95 }}
+                    as={motion.button}
                     fluid
                     className={`${styles['submit']} ${styles['primary']}`}
                     type='submit'
+                    size='large'
+                    loading={loading}
                 >
-                    LOGIN
+                    Sign in
                 </Button>
                 <Message negative hidden={Boolean(!error)}>
                     {error}

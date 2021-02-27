@@ -23,15 +23,15 @@ const MyApp: FunctionComponent<AppProps> = (props) => {
     return (
         <>
             <Head>
-                <title>HELPq</title>
-                <meta name='theme-color' content='#4c9cd2' />
+                <title>Saturn - delivery</title>
+                <meta name='theme-color' content='#8403fc' />
                 <meta
                     name='viewport'
                     content='minimum-scale=1, initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width'
                 />
                 <link rel='preconnect' href='https://fonts.gstatic.com' />
                 <link
-                    href='https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;700&display=swap'
+                    href='https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Akaya+Telivigala&display=swap'
                     rel='stylesheet'
                 />
             </Head>
