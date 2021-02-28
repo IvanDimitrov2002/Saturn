@@ -20,7 +20,8 @@ import { useUser } from 'utils/useUser';
 import useWindowSize from 'utils/useWindowSize';
 
 interface ProductCardProps extends Offer {
-    onSwipe: (gesture: string) => void;
+    onSwipeLeft: (productId: string) => void;
+    onSwipeRight: (productId: string) => void;
 }
 
 const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
@@ -44,7 +45,9 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
         if (hasSwiped(velocity)) {
             const gesture = detectSwipeGesture(velocity);
             await controls.start(gesture, { duration: 0.3 });
-            props.onSwipe(gesture);
+
+            if (gesture === 'right') props.onSwipeRight(props.id || '');
+            else props.onSwipeLeft(props.id || '');
         }
     };
 
@@ -122,7 +125,7 @@ const ProductCard: FunctionComponent<ProductCardProps> = (props) => {
 const Home: FunctionComponent = () => {
     const router = useRouter();
 
-    const { status } = useUser();
+    const { status, user } = useUser();
     const { data: offers, mutate } = useCollection<Offer>(
         'offers',
         {
@@ -163,6 +166,16 @@ const Home: FunctionComponent = () => {
         );
     };
 
+    const userCart = useCollection(`users/${user?.id}/cart`);
+
+    const addProductToCart = async (offerId: string) => {
+        await paginate();
+        userCart.add({
+            offer: fuego.db.doc(`offers/${offerId}`),
+            amount: 1,
+        });
+    };
+
     useEffect(() => {
         if (status === 'loggedout') {
             router.push('/');
@@ -186,7 +199,8 @@ const Home: FunctionComponent = () => {
                     ?.map((offer) => (
                         <ProductCard
                             {...offer}
-                            onSwipe={paginate}
+                            onSwipeLeft={paginate}
+                            onSwipeRight={addProductToCart}
                             key={offer.id}
                         />
                     ))}
